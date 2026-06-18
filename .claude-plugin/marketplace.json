@@ -1,7 +1,7 @@
 {
-  "name": "njkim",
-  "owner": { "name": "njkim", "email": "joo24587@gmail.com" },
-  "description": "njkim의 Claude Code 플러그인 모음",
+  "name": "zoo3323",
+  "owner": { "name": "zoo3323", "email": "joo24587@gmail.com" },
+  "description": "zoo3323의 Claude Code 플러그인 모음",
   "plugins": [
     {
       "name": "paper-summary",
