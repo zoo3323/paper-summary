@@ -6,7 +6,7 @@
     {
       "name": "paper-summary",
       "source": "./plugins/paper-summary",
-      "description": "PDF 논문 → 한국어 번역본 + 요약본 HTML 생성"
+      "description": "PDF 논문 → 한국어 번역본 + 요약본 + 용어사전 HTML 생성 (스킬 2종)"
     }
   ]
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE_KO}} — 용어 사전</title>
+<script>
+  MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]'],['$$','$$']] },
+              options:{ skipHtmlTags:['script','noscript','style','textarea','pre'] } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <span class="paper-title">{{TITLE_KO}}</span>
+  <div class="nav-links">
+    <a href="번역본.html">📄 전체 번역본</a>
+    <a href="요약본.html">📋 핵심 요약본</a>
+    <a href="용어사전.html" class="active">📖 용어 사전</a>
+  </div>
+</nav>
+<div class="wrap">
+  <h1>{{TITLE_KO}} — 용어 / 약어 사전</h1>
+  <div class="meta">{{AUTHORS}} · {{VENUE_YEAR}}</div>
+  <div class="orig">원제: {{TITLE_ORIGINAL}}</div>
+  <hr>
+  <p>이 논문에 등장하는 전문 용어·약어를 한국어 정의와 함께 정리했습니다. 아래 검색창에 한글/영어 키워드를 입력해 빠르게 찾을 수 있습니다.</p>
+  <input type="text" id="glossary-search" class="glossary-search" placeholder="🔍 용어 검색 (예: attention, 어텐션, BLEU)" oninput="filterGlossary()">
+  <p class="glossary-count" id="glossary-count"></p>
+  <!-- 용어 항목: 각 항목은 <dt> 영어용어(한국어) + 약어 / <dd> 정의.
+       data-terms 속성에 검색용 키워드(한/영 모두)를 공백으로 나열한다. -->
+  <dl class="glossary">
+{{GLOSSARY}}
+  </dl>
+  <p style="margin-top:28px;text-align:center;">
+    <a href="번역본.html" style="font-weight:700;">📄 전체 번역본 보기 →</a>
+  </p>
+</div>
+<footer>용어 사전 · paper-summary 스킬로 자동 생성</footer>
+<script>
+function filterGlossary(){
+  var q = document.getElementById('glossary-search').value.trim().toLowerCase();
+  var items = document.querySelectorAll('.glossary > .term');
+  var shown = 0;
+  items.forEach(function(it){
+    var hay = (it.getAttribute('data-terms') || it.textContent).toLowerCase();
+    var match = q === '' || hay.indexOf(q) !== -1;
+    it.style.display = match ? '' : 'none';
+    if (match) shown++;
+  });
+  var c = document.getElementById('glossary-count');
+  c.textContent = q === '' ? (items.length + '개 용어') : (shown + ' / ' + items.length + '개 일치');
+}
+document.addEventListener('DOMContentLoaded', filterGlossary);
+</script>
+</body>
+</html>
