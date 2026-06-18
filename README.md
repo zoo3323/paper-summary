@@ -42,6 +42,4 @@ paper-summary/                       # 이 저장소 = 마켓플레이스
 ```
 
 ## 업데이트 배포
-
-`plugins/paper-summary/.claude-plugin/plugin.json` 의 `version` 을 올린 뒤 commit & push 하면
-사용자는 `/plugin update` 로 새 버전을 받을 수 있습니다.
+ `/plugin update` 로 새 버전을 받을 수 있습니다.
