@@ -1,0 +1,78 @@
+/* paper-summary 공통 스타일 — 두 HTML 의 <style> 안에 그대로 삽입한다. */
+:root{
+  --bg:#f7f7f8; --fg:#1f2328; --muted:#6a737d; --line:#e3e6ea;
+  --accent:#2563eb; --accent-soft:#eef4ff; --card:#ffffff;
+  --code-bg:#f3f4f6; --maxw:860px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",
+    "Malgun Gothic",sans-serif;
+  line-height:1.85; font-size:17px; word-break:keep-all; overflow-wrap:break-word;
+}
+/* 상단 네비게이션 */
+.topnav{
+  position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:16px;
+  padding:12px 22px; background:rgba(255,255,255,.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.topnav .paper-title{
+  font-weight:700; font-size:15px; color:var(--fg); flex:1;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nav-links{display:flex; gap:8px;}
+.nav-links a{
+  text-decoration:none; font-size:14px; font-weight:600; color:var(--muted);
+  padding:7px 14px; border-radius:999px; border:1px solid var(--line); white-space:nowrap;
+  transition:all .15s;
+}
+.nav-links a:hover{color:var(--accent); border-color:var(--accent);}
+.nav-links a.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+/* 본문 컨테이너 */
+.wrap{max-width:var(--maxw); margin:0 auto; padding:38px 22px 120px;}
+h1{font-size:30px; line-height:1.35; margin:.3em 0 .5em;}
+h2{font-size:23px; margin:1.8em 0 .6em; padding-bottom:.25em; border-bottom:2px solid var(--line);}
+h3{font-size:19px; margin:1.4em 0 .5em;}
+h4{font-size:17px; margin:1.2em 0 .4em; color:#374151;}
+p{margin:.7em 0;}
+a{color:var(--accent);}
+/* 메타(저자/원문 정보) */
+.meta{color:var(--muted); font-size:14px; margin-bottom:8px;}
+.orig{color:var(--muted); font-size:13px; font-style:italic; margin-top:2px;}
+/* 그림 */
+figure{margin:26px auto; text-align:center;}
+figure img{max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px; background:#fff;}
+figcaption{font-size:14px; color:var(--muted); margin-top:8px;}
+/* 표 */
+.table-wrap{overflow-x:auto; margin:22px 0;}
+table{border-collapse:collapse; width:100%; font-size:15px; background:var(--card);}
+th,td{border:1px solid var(--line); padding:8px 12px; text-align:left; vertical-align:top;}
+thead th{background:var(--accent-soft); font-weight:700;}
+tbody tr:nth-child(even){background:#fafbfc;}
+caption{caption-side:bottom; font-size:13px; color:var(--muted); padding-top:8px;}
+/* 인용/하이라이트 박스 */
+blockquote{margin:18px 0; padding:12px 18px; border-left:4px solid var(--accent);
+  background:var(--accent-soft); color:#374151; border-radius:0 8px 8px 0;}
+.callout{background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 22px; margin:20px 0;}
+.callout h3{margin-top:0;}
+.tag{display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--accent);
+  border-radius:6px; padding:2px 9px; margin-right:8px; vertical-align:middle;}
+/* 코드/수식 */
+code{background:var(--code-bg); padding:.15em .4em; border-radius:5px; font-size:.92em;}
+pre{background:#0f172a; color:#e2e8f0; padding:16px; border-radius:10px; overflow-x:auto;}
+pre code{background:none; color:inherit;}
+mjx-container{overflow-x:auto; overflow-y:hidden; max-width:100%;}
+hr{border:none; border-top:1px solid var(--line); margin:32px 0;}
+ul,ol{padding-left:1.4em;}
+li{margin:.3em 0;}
+/* 요약본 카드 그리드 */
+.summary-grid{display:grid; gap:18px; margin-top:8px;}
+footer{max-width:var(--maxw); margin:0 auto; padding:24px 22px; color:var(--muted);
+  font-size:13px; border-top:1px solid var(--line);}
+@media (max-width:600px){
+  body{font-size:16px;} .wrap{padding:24px 16px 100px;} h1{font-size:25px;}
+  .topnav{padding:10px 14px;} .nav-links a{padding:6px 10px; font-size:13px;}
+}

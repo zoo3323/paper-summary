@@ -1,0 +1,4 @@
+.DS_Store
+한국어_요약/
+*.pyc
+__pycache__/

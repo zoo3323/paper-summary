@@ -1,0 +1,7 @@
+{
+  "name": "paper-summary",
+  "version": "1.0.0",
+  "description": "PDF 논문을 한국어 전체 번역본 HTML + 핵심 요약본 HTML 2개로 만들어 주는 스킬. 그림·표·수식을 그대로 가져오고 두 문서는 서로 클릭 이동 가능.",
+  "author": { "name": "njkim", "email": "joo24587@gmail.com" },
+  "keywords": ["pdf", "paper", "논문", "번역", "요약", "korean", "html"]
+}

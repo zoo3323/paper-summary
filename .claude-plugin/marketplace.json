@@ -1,0 +1,12 @@
+{
+  "name": "njkim",
+  "owner": { "name": "njkim", "email": "joo24587@gmail.com" },
+  "description": "njkim의 Claude Code 플러그인 모음",
+  "plugins": [
+    {
+      "name": "paper-summary",
+      "source": "./plugins/paper-summary",
+      "description": "PDF 논문 → 한국어 번역본 + 요약본 HTML 생성"
+    }
+  ]
+}

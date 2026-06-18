@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE_KO}} — 전체 번역본</title>
+<script>
+  MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]'],['$$','$$']] },
+              options:{ skipHtmlTags:['script','noscript','style','textarea','pre'] } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <span class="paper-title">{{TITLE_KO}}</span>
+  <div class="nav-links">
+    <a href="번역본.html" class="active">📄 전체 번역본</a>
+    <a href="요약본.html">📋 핵심 요약본</a>
+  </div>
+</nav>
+<div class="wrap">
+  <h1>{{TITLE_KO}}</h1>
+  <div class="meta">{{AUTHORS}} · {{VENUE_YEAR}}</div>
+  <div class="orig">원제: {{TITLE_ORIGINAL}}</div>
+  <hr>
+  <!-- 본문: 논문 전체를 섹션 순서대로 한국어 번역.
+       그림 = <figure><img src="images/..."><figcaption>그림 N. 캡션</figcaption></figure>
+       표   = <div class="table-wrap"><table>...</table></div>
+       수식 = 인라인 \( ... \) / 디스플레이 \[ ... \] (MathJax) -->
+{{BODY}}
+</div>
+<footer>이 문서는 원문 PDF를 한국어로 번역한 것입니다 · paper-summary 스킬로 자동 생성</footer>
+</body>
+</html>
