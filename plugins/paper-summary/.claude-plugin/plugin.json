@@ -1,6 +1,6 @@
 {
   "name": "paper-summary",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "PDF 논문을 한국어로 변환하는 스킬 모음. (1) paper-summary: 전체 번역본 + 핵심 요약본 HTML 생성. (2) paper-summary-word: 전문 용어·약어 사전 HTML 생성. 그림·표·수식을 그대로 가져오고 문서들은 서로 클릭 이동 가능.",
   "author": { "name": "njkim", "email": "joo24587@gmail.com" },
   "keywords": ["pdf", "paper", "논문", "번역", "요약", "용어", "사전", "glossary", "korean", "html"]

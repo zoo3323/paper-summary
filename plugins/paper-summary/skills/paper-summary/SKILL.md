@@ -43,22 +43,26 @@ mkdir -p 한국어_요약/images 작업파일
 ```
 
 ### 2. 의존성 확인 & 추출 실행
-스킬 디렉토리의 추출 스크립트를 쓴다. 경로는 이 SKILL.md 기준 `scripts/extract_pdf.py`
-(절대경로: `~/.claude/skills/paper-summary/scripts/extract_pdf.py`).
+스킬 디렉토리의 추출 스크립트 `scripts/extract_pdf.py` 를 쓴다.
+**스킬 호출 시 함께 표시되는 "Base directory for this skill" 경로를 기준**으로 잡는다.
+(예: `<base-dir>/scripts/extract_pdf.py`. 절대 `~/.claude/skills/...` 로 추측하지 말 것 —
+플러그인으로 설치되면 `~/.claude/plugins/cache/...` 아래에 있다.)
 
-PyMuPDF가 필요하다. 먼저 시도하고, 없으면 설치:
+PyMuPDF가 필요하다. 먼저 시도하고, 없으면 설치(외부 관리 환경이면 `--user` 폴백):
 ```bash
-python3 -c "import fitz" 2>/dev/null || pip3 install --quiet pymupdf
+python3 -c "import fitz" 2>/dev/null \
+  || pip3 install --quiet pymupdf \
+  || pip3 install --quiet --user pymupdf
 ```
 그다음 추출:
 ```bash
-python3 ~/.claude/skills/paper-summary/scripts/extract_pdf.py \
+python3 "<base-dir>/scripts/extract_pdf.py" \
   "<PDF경로>" "작업파일" "한국어_요약/images"
 ```
 - stdout 으로 `{"ok":true, n_pages, n_raster, n_vector, title, manifest, fulltext}` JSON 이 나온다.
 - 결과: `작업파일/manifest.json`(페이지별 텍스트 + 사용 가능한 이미지 목록), `작업파일/fulltext.txt`,
   그리고 `한국어_요약/images/*.png`.
-- `PYMUPDF_MISSING` 이 나오면 `pip3 install pymupdf` 재시도. pip 도 막혀 있으면 사용자에게 알린다.
+- `PYMUPDF_MISSING` 이 나오면 위 설치 명령 재시도. pip 도 막혀 있으면 사용자에게 알리고 어떻게 할지 확인한다.
 
 ### 3. 논문 내용 파악
 - **Read 툴로 PDF 자체를 직접 읽는다** (페이지가 이미지로 렌더링되어 그림/표/레이아웃을 눈으로 확인 가능).
@@ -118,3 +122,4 @@ python3 ~/.claude/skills/paper-summary/scripts/extract_pdf.py \
 - 폴더/파일 이름(`한국어_요약`, `작업파일`, `번역본.html`, `요약본.html`)은 한글 그대로 사용한다.
 - 동일 이름 폴더가 이미 있으면 덮어쓰기 전에 사용자에게 확인한다.
 - 그림이 너무 많거나 큰 경우에도 모두 포함하되, 명백한 로고/장식/페이지 배경 크롭은 제외해도 된다.
+- 수식 렌더링은 MathJax CDN을 사용하므로 결과 HTML을 열 때 인터넷 연결이 필요하다(오프라인에서는 수식만 렌더링되지 않고 나머지는 정상 표시).

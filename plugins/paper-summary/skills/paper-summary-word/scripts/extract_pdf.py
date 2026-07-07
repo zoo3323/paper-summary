@@ -69,6 +69,7 @@ def main():
         # --- 1) 임베디드 래스터 이미지 ---
         for info in page.get_images(full=True):
             xref = info[0]
+            smask = info[1]
             if xref in seen_xref:
                 continue
             seen_xref.add(xref)
@@ -79,6 +80,15 @@ def main():
                     continue
                 if pix.n - pix.alpha >= 4:  # CMYK 등 -> RGB 변환
                     pix = fitz.Pixmap(fitz.csRGB, pix)
+                # 소프트 마스크(투명도)가 있으면 알파 채널로 합성
+                if smask > 0 and pix.alpha == 0:
+                    try:
+                        mask = fitz.Pixmap(doc, smask)
+                        if (mask.width, mask.height) == (pix.width, pix.height):
+                            pix = fitz.Pixmap(pix, mask)
+                        mask = None
+                    except Exception as e:
+                        log("page %d xref %d smask 합성 실패(무시): %s" % (pno + 1, xref, e))
                 fname = "p%03d_img%d.png" % (pno + 1, xref)
                 pix.save(os.path.join(args.images_dir, fname))
                 page_imgs.append({

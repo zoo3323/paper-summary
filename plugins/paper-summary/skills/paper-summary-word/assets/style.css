@@ -1,9 +1,18 @@
 /* paper-summary-word 스타일 — 용어사전 HTML 의 <style> 안에 그대로 삽입한다.
    paper-summary 의 공통 스타일과 동일한 베이스 + 용어사전 전용 스타일. */
 :root{
-  --bg:#f7f7f8; --fg:#1f2328; --muted:#6a737d; --line:#e3e6ea;
+  --bg:#f7f7f8; --fg:#1f2328; --fg-soft:#374151; --muted:#6a737d; --line:#e3e6ea;
   --accent:#2563eb; --accent-soft:#eef4ff; --card:#ffffff;
-  --code-bg:#f3f4f6; --maxw:860px;
+  --code-bg:#f3f4f6; --nav-bg:rgba(255,255,255,.92); --maxw:860px;
+  color-scheme:light dark;
+}
+/* 다크 모드 */
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1115; --fg:#e6e8eb; --fg-soft:#c3c9d1; --muted:#9aa4b2; --line:#2a2f3a;
+    --accent:#5b8def; --accent-soft:#1b2740; --card:#171a21;
+    --code-bg:#232833; --nav-bg:rgba(15,17,21,.92);
+  }
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -16,7 +25,7 @@ body{
 /* 상단 네비게이션 */
 .topnav{
   position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:16px;
-  padding:12px 22px; background:rgba(255,255,255,.92); backdrop-filter:blur(8px);
+  padding:12px 22px; background:var(--nav-bg); backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
 .topnav .paper-title{
@@ -36,7 +45,7 @@ body{
 h1{font-size:30px; line-height:1.35; margin:.3em 0 .5em;}
 h2{font-size:23px; margin:1.8em 0 .6em; padding-bottom:.25em; border-bottom:2px solid var(--line);}
 h3{font-size:19px; margin:1.4em 0 .5em;}
-h4{font-size:17px; margin:1.2em 0 .4em; color:#374151;}
+h4{font-size:17px; margin:1.2em 0 .4em; color:var(--fg-soft);}
 p{margin:.7em 0;}
 a{color:var(--accent);}
 /* 메타(저자/원문 정보) */
@@ -44,7 +53,7 @@ a{color:var(--accent);}
 .orig{color:var(--muted); font-size:13px; font-style:italic; margin-top:2px;}
 /* 인용/하이라이트 박스 */
 blockquote{margin:18px 0; padding:12px 18px; border-left:4px solid var(--accent);
-  background:var(--accent-soft); color:#374151; border-radius:0 8px 8px 0;}
+  background:var(--accent-soft); color:var(--fg-soft); border-radius:0 8px 8px 0;}
 .callout{background:var(--card); border:1px solid var(--line); border-radius:12px;
   padding:18px 22px; margin:20px 0;}
 .callout h3{margin-top:0;}
@@ -81,8 +90,15 @@ footer{max-width:var(--maxw); margin:0 auto; padding:24px 22px; color:var(--mute
   background:var(--accent-soft); border-radius:6px; padding:2px 8px; margin-left:8px; vertical-align:middle;
 }
 .glossary dt .en{color:var(--muted); font-weight:600; font-size:14px;}
-.glossary dd{margin:0; color:#374151; font-size:15.5px; line-height:1.7;}
+.glossary dd{margin:0; color:var(--fg-soft); font-size:15.5px; line-height:1.7;}
 @media (max-width:600px){
   body{font-size:16px;} .wrap{padding:24px 16px 100px;} h1{font-size:25px;}
   .topnav{padding:10px 14px;} .nav-links a{padding:6px 10px; font-size:13px;}
+}
+/* 인쇄(PDF 저장) */
+@media print{
+  .topnav,.glossary-search,.glossary-count{display:none;}
+  body{background:#fff;}
+  .wrap{padding-top:0; padding-bottom:24px;}
+  .glossary .term,blockquote{break-inside:avoid;}
 }
