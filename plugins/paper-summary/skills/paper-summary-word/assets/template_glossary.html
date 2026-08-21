@@ -34,18 +34,16 @@
 </nav>
 <div class="wrap wide">
   <h1>{{TITLE_KO}} — 용어 사전</h1>
+  <p class="orig">{{TITLE_ORIGINAL}}</p>
   <div class="meta">{{AUTHORS}} · {{VENUE_YEAR}}</div>
-  <div class="orig">{{TITLE_ORIGINAL}}</div>
   <hr>
   <p>이 논문에 나오는 전문 용어와 약어를 한국어 정의와 함께 정리했습니다. 한글·영어·약어 어느 쪽으로도 검색할 수 있습니다.</p>
   <input type="text" id="glossary-search" class="glossary-search" placeholder="용어 검색 — 한글, 영어, 약어 모두 가능" oninput="filterGlossary()">
   <p class="glossary-count" id="glossary-count"></p>
-  <!-- 항목: <div class="term" data-terms="검색어들"><dt>한국어 <span class="en">English</span> <span class="abbr">ABBR</span></dt><dd>정의</dd></div>
-       표제어에는 음차를 쓰지 않는다. 음차형은 data-terms 에만 넣는다. -->
   <dl class="glossary">
 {{GLOSSARY}}
   </dl>
-  <p style="margin-top:40px;"><a href="번역본.html">전체 번역본 보기 →</a></p>
+  <p class="more"><a href="번역본.html">전체 번역본 보기 →</a></p>
 </div>
 <footer>용어 사전 · paper-summary 스킬로 생성</footer>
 <script>

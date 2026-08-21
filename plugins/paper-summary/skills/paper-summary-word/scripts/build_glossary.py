@@ -56,7 +56,7 @@ def main():
     if standalone:
         # 번역본·요약본이 없으면 그리로 가는 링크를 전부 걷어낸다
         html = re.sub(r'\s*<a href="(번역본|요약본)\.html"[^>]*>.*?</a>', "", html)
-        html = re.sub(r'\s*<p style="margin-top:40px;">\s*</p>', "", html)
+        html = re.sub(r'\s*<p class="more">\s*</p>', "", html)
 
     left = sorted(set(re.findall(r"\{\{([A-Z_]+)\}\}", html)))
     os.makedirs(out, exist_ok=True)
