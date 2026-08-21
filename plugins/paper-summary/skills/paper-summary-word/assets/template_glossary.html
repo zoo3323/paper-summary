@@ -6,6 +6,11 @@
 <meta name="color-scheme" content="light dark">
 <title>{{TITLE_KO}} — 용어 사전</title>
 <script>
+  /* 저장된 테마를 그리기 전에 적용 — 새로고침 시 화면 깜빡임 방지 */
+  (function(){try{var t=localStorage.getItem('ps-theme');
+    if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<script>
   MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]'],['$$','$$']] },
               options:{ skipHtmlTags:['script','noscript','style','textarea','pre'] } };
 </script>
@@ -22,6 +27,7 @@
     <a href="요약본.html">📋 핵심 요약본</a>
     <a href="용어사전.html" class="active">📖 용어 사전</a>
   </div>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="다크 모드로 전환" title="다크 모드로 전환">🌙</button>
 </nav>
 <div class="wrap">
   <h1>{{TITLE_KO}} — 용어 / 약어 사전</h1>
@@ -56,6 +62,34 @@ function filterGlossary(){
   c.textContent = q === '' ? (items.length + '개 용어') : (shown + ' / ' + items.length + '개 일치');
 }
 document.addEventListener('DOMContentLoaded', filterGlossary);
+</script>
+<script>
+/* 다크 모드 전환 버튼 — 시스템 설정 → 버튼으로 덮어쓰기, 선택은 브라우저에 기억된다 */
+(function(){
+  var root = document.documentElement;
+  var btn  = document.getElementById('theme-toggle');
+  if(!btn) return;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme:dark)') : null;
+  function current(){
+    var t = root.getAttribute('data-theme');
+    if(t === 'dark' || t === 'light') return t;
+    return (mq && mq.matches) ? 'dark' : 'light';
+  }
+  function paint(){
+    var dark = current() === 'dark';
+    btn.textContent = dark ? '☀️' : '🌙';
+    btn.setAttribute('aria-label', dark ? '라이트 모드로 전환' : '다크 모드로 전환');
+    btn.title = btn.getAttribute('aria-label');
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('ps-theme', next); }catch(e){}
+    paint();
+  });
+  if(mq && mq.addEventListener) mq.addEventListener('change', paint);
+  paint();
+})();
 </script>
 </body>
 </html>
