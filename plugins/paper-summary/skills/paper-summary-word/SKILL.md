@@ -1,6 +1,6 @@
 ---
 name: paper-summary-word
-description: 현재 폴더의 PDF 논문(또는 paper-summary 가 만든 결과물)에서 전문 용어·약어를 뽑아 한국어 정의와 함께 정리한 검색 가능한 용어 사전 HTML(`용어사전.html`)을 만든다. 같은 `한국어_요약/` 폴더에 저장하고, 이미 있는 번역본·요약본의 네비게이션에 용어 사전 탭을 끼워 넣어 서로 클릭 이동되게 한다. 사용자가 /paper-summary-word 라고 하거나 "논문 용어/약어 사전 만들어줘"라고 할 때 사용.
+description: 현재 폴더의 PDF 논문(또는 paper-summary 가 만든 결과물)에서 전문 용어·약어를 뽑아 한국어 정의와 함께 정리한 검색 가능한 용어 사전 HTML(`용어사전.html`)을 만든다. 같은 `korean/` 폴더에 저장하고, 이미 있는 번역본·요약본의 네비게이션에 용어 사전 탭을 끼워 넣어 서로 클릭 이동되게 한다. 사용자가 /paper-summary-word 라고 하거나 "논문 용어/약어 사전 만들어줘"라고 할 때 사용.
 ---
 
 # paper-summary-word
@@ -12,14 +12,14 @@ description: 현재 폴더의 PDF 논문(또는 paper-summary 가 만든 결과�
 ## 폴더 구조 (현재 폴더 기준)
 
 ```
-./한국어_요약/          ← 결과물 폴더 (paper-summary 와 공유)
-   ├─ 번역본.html       ← (있으면) 네비게이션에 용어사전 탭을 끼워 넣는다
-   ├─ 요약본.html       ← (있으면) 네비게이션에 용어사전 탭을 끼워 넣는다
-   ├─ 용어사전.html     ← 조립기가 생성 (직접 쓰지 않는다)
-   └─ images/
-   └─ .작업/           ← 숨김. 지워도 되는 찌꺼기가 아니다 (원고가 여기 있다)
+./korean/                  ← 결과물 폴더 (paper-summary 와 공유)
+   ├─ 번역본.html           ← (있으면) 네비게이션에 용어사전 탭을 끼워 넣는다
+   ├─ 요약본.html           ← (있으면) 네비게이션에 용어사전 탭을 끼워 넣는다
+   ├─ 용어사전.html         ← ★ 조립기가 생성 (직접 쓰지 않는다)
+   ├─ images/
+   └─ .work/               ← 숨김. 지워도 되는 찌꺼기가 아니다 (원고가 여기 있다)
        ├─ fulltext.txt
-       └─ 원고/        ← ★ 네가 직접 쓰는 곳
+       └─ src/             ← ★ 네가 직접 쓰는 원고
            ├─ meta.json
            └─ glossary.html
 ```
@@ -62,25 +62,25 @@ description: 현재 폴더의 PDF 논문(또는 paper-summary 가 만든 결과�
 
 ### 0. 대상 PDF / 결과 폴더 찾기
 - 인자(`$ARGUMENTS`)로 PDF 경로가 주어지면 그것을 사용.
-- 없으면 현재 폴더의 `*.pdf` 를 찾는다. 여러 개면 사용자에게 묻고, 0개면 — 단 `한국어_요약/.작업/fulltext.txt` 가 이미 있으면 그걸 텍스트 소스로 쓴다.
-- `한국어_요약/` 폴더가 이미 있는지 확인한다(번역본·요약본 존재 여부 파악용). 없으면 `mkdir -p 한국어_요약`.
+- 없으면 현재 폴더의 `*.pdf` 를 찾는다. 여러 개면 사용자에게 묻고, 0개면 — 단 `korean/.work/fulltext.txt` 가 이미 있으면 그걸 텍스트 소스로 쓴다.
+- `korean/` 폴더가 이미 있는지 확인한다(번역본·요약본 존재 여부 파악용). 없으면 `mkdir -p korean`.
 
 ### 1. 논문 텍스트 확보
 다음 우선순위로 본문 텍스트를 얻는다:
-1. `한국어_요약/.작업/fulltext.txt` 가 있으면 그대로 읽어 쓴다(이미 paper-summary 가 추출해 둔 것).
+1. `korean/.work/fulltext.txt` 가 있으면 그대로 읽어 쓴다(이미 paper-summary 가 추출해 둔 것).
 2. 없으면 추출 스크립트로 만든다. 스크립트 경로는 **스킬 호출 시 표시되는 "Base directory for this skill" 기준** `scripts/extract_pdf.py` 이다(`~/.claude/skills/...` 로 추측하지 말 것). PyMuPDF 확인 후 실행:
    ```bash
    python3 -c "import fitz" 2>/dev/null \
      || pip3 install --quiet pymupdf \
      || pip3 install --quiet --user pymupdf
-   mkdir -p 한국어_요약/.작업/원고
+   mkdir -p korean/.work/src
    python3 "<base-dir>/scripts/extract_pdf.py" \
-     "<PDF경로>" "한국어_요약/.작업" "한국어_요약/images"
+     "<PDF경로>" "korean/.work" "korean/images"
    ```
-   - `한국어_요약/.작업/fulltext.txt` 와 `manifest.json` 이 생성된다. (이미지는 사전엔 보통 불필요하니 무시해도 된다.)
+   - `korean/.work/fulltext.txt` 와 `manifest.json` 이 생성된다. (이미지는 사전엔 보통 불필요하니 무시해도 된다.)
 - 더 정확히 하려면 **Read 툴로 PDF 를 직접 읽어** 용어의 정확한 의미·맥락을 확인한다.
 
-### 2. `한국어_요약/.작업/원고/glossary.html` 작성 — 항목만
+### 2. `korean/.work/src/glossary.html` 작성 — 항목만
 **항목 조각만 쓴다.** `<html>`·`<head>`·`<style>`·네비게이션·검색창은 조립기가 붙인다.
 CSS 를 새로 쓰거나 인라인 `style=` 을 덧붙이지 않는다.
 
@@ -101,7 +101,7 @@ CSS 를 새로 쓰거나 인라인 `style=` 을 덧붙이지 않는다.
 - **`data-terms` 속성에 검색 키워드(한글·영어·약어)를 모두 공백으로 나열**한다. 검색 필터가 이 값을 사용한다. 비우면 항목 텍스트로 대체된다.
 - 정의는 1~3문장, 이 논문의 맥락에 맞게. 수식 기호는 MathJax 인라인(`\( ... \)`)으로.
 - 이모지를 항목 앞에 붙이지 않는다. 항목마다 상자를 두르지도 않는다 — 스타일은 이미 정해져 있다.
-- 함께 `한국어_요약/.작업/원고/meta.json` 을 쓴다 (이미 `paper-summary` 가 만들어 두었으면 그대로 쓴다):
+- 함께 `korean/.work/src/meta.json` 을 쓴다 (이미 `paper-summary` 가 만들어 두었으면 그대로 쓴다):
   ```json
   {"TITLE_KO":"번역한 제목","TITLE_ORIGINAL":"원제",
    "AUTHORS":"저자 · 소속","VENUE_YEAR":"학회/저널 · 연도 (모르면 —)"}
@@ -109,20 +109,20 @@ CSS 를 새로 쓰거나 인라인 `style=` 을 덧붙이지 않는다.
 
 ### 2.5. 조립
 ```bash
-python3 "<base-dir>/scripts/build_glossary.py" "<base-dir>" "한국어_요약/.작업/원고" "한국어_요약"
+python3 "<base-dir>/scripts/build_glossary.py" "<base-dir>" "korean/.work/src" "korean"
 ```
 번역본·요약본이 **없으면** 끝에 `--standalone` 을 붙인다 — 깨질 링크를 알아서 걷어낸다.
 경고가 나오면 원고를 고치고 다시 실행한다.
 
 ### 3. 번역본·요약본 네비게이션에 용어사전 탭 끼워 넣기
-`한국어_요약/번역본.html`, `한국어_요약/요약본.html` 이 **존재하면** 아래를 실행한다.
+`korean/번역본.html`, `korean/요약본.html` 이 **존재하면** 아래를 실행한다.
 각 파일의 요약본 링크 바로 뒤에, 아직 없을 때만 용어사전 탭을 넣는다:
 
 ```bash
 python3 - <<'EOF'
 import re, os
 tab = '    <a href="용어사전.html">용어 사전</a>\n'
-for f in ["한국어_요약/번역본.html", "한국어_요약/요약본.html"]:
+for f in ["korean/번역본.html", "korean/요약본.html"]:
     if not os.path.isfile(f):
         continue
     s = open(f, encoding="utf-8").read()
@@ -136,15 +136,15 @@ for f in ["한국어_요약/번역본.html", "한국어_요약/요약본.html"]:
 EOF
 ```
 
-원고(`한국어_요약/.작업/원고/`)가 남아 있다면 번역본·요약본을 다시 조립할 때 탭이 사라지므로,
+원고(`korean/.work/src/`)가 남아 있다면 번역본·요약본을 다시 조립할 때 탭이 사라지므로,
 재조립한 경우 이 단계를 다시 실행한다.
 
 ### 4. 마무리 보고
-- 생성한 파일 경로(`한국어_요약/용어사전.html`)와 정리한 용어 수를 알린다.
+- 생성한 파일 경로(`korean/용어사전.html`)와 정리한 용어 수를 알린다.
 - 번역본·요약본 네비게이션을 갱신했는지 보고한다.
 - 원고를 고쳐 다시 조립할 수 있음을 알린다. 숨김 폴더이므로 경로를 그대로 적어 준다:
-  `한국어_요약/.작업/원고/glossary.html` 수정 후 2.5 재실행.
-- 여는 법: `open 한국어_요약/용어사전.html` (macOS).
+  `korean/.work/src/glossary.html` 수정 후 2.5 재실행.
+- 여는 법: `open korean/용어사전.html` (macOS).
 
 ---
 
@@ -157,5 +157,6 @@ EOF
 - **네비게이션 일관성**: 번역본·요약본이 있으면 세 HTML 이 서로 클릭 이동돼야 한다. 용어사전의 active 탭은 자기 자신(`class="active"`)이어야 한다.
 
 ## 주의
-- 폴더/파일 이름(`한국어_요약`, `.작업`, `원고`, `용어사전.html`)은 한글 그대로 사용한다.
+- 이름은 정확히 이대로 쓴다 — 폴더는 영어(`korean`, `.work`, `src`),
+  결과 파일은 한글(`용어사전.html`). 임의로 바꾸면 네비게이션 링크가 깨진다.
 - `용어사전.html` 이 이미 있으면 덮어쓰기 전에 사용자에게 확인한다.
