@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <title>{{TITLE_KO}} — 핵심 요약본</title>
 <script>
-  /* 저장된 테마를 그리기 전에 적용 — 새로고침 시 화면 깜빡임 방지 */
+  /* 저장된 테마를 그리기 전에 적용 — 새로고침 시 화면이 번쩍이지 않게 한다 */
   (function(){try{var t=localStorage.getItem('ps-theme');
     if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
@@ -23,57 +23,76 @@
 <nav class="topnav">
   <span class="paper-title">{{TITLE_KO}}</span>
   <div class="nav-links">
-    <a href="번역본.html">📄 전체 번역본</a>
-    <a href="요약본.html" class="active">📋 핵심 요약본</a>
+    <a href="번역본.html">전체 번역본</a>
+    <a href="요약본.html" class="active">핵심 요약본</a>
   </div>
-  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="다크 모드로 전환" title="다크 모드로 전환">🌙</button>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+    <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.6A8.6 8.6 0 0 1 9.4 4 8.6 8.6 0 1 0 20 14.6Z"/></svg>
+    <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4 17 7M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"/></svg>
+  </button>
 </nav>
-<div class="wrap">
-  <h1>{{TITLE_KO}} — 핵심 요약</h1>
+<div class="wrap wide">
+  <h1>{{TITLE_KO}}</h1>
   <div class="meta">{{AUTHORS}} · {{VENUE_YEAR}}</div>
-  <div class="orig">원제: {{TITLE_ORIGINAL}}</div>
+  <div class="orig">{{TITLE_ORIGINAL}}</div>
   <hr>
-  <div class="summary-grid">
-    <div class="callout"><h3><span class="tag">한 줄 요약</span>TL;DR</h3>{{TLDR}}</div>
-    <div class="callout"><h3>🎯 해결하려는 문제 (Problem)</h3>{{PROBLEM}}</div>
-    <div class="callout"><h3>💡 핵심 아이디어 / 기여 (Contribution)</h3>{{CONTRIBUTION}}</div>
-    <div class="callout"><h3>🛠️ 방법론 (Method)</h3>{{METHOD}}</div>
-    <div class="callout"><h3>🧪 실험 / 결과 (Experiments & Results)</h3>{{RESULTS}}</div>
-    <div class="callout"><h3>✅ 결론 (Conclusion)</h3>{{CONCLUSION}}</div>
-    <div class="callout"><h3>⚠️ 한계 및 향후 과제 (Limitations)</h3>{{LIMITATIONS}}</div>
-    <div class="callout"><h3>📌 핵심 용어 (Key Terms)</h3>{{TERMS}}</div>
+  <!-- 리드: 이 페이지에서 시각적으로 가장 무거운 요소. 한두 문장으로 끝낸다. -->
+  <div class="sum-lead">{{TLDR}}</div>
+  <div class="summary">
+    <section class="sum-block">
+      <h2>해결하려는 문제</h2>
+      <div class="sum-body">{{PROBLEM}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>핵심 기여</h2>
+      <div class="sum-body">{{CONTRIBUTION}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>방법</h2>
+      <div class="sum-body">{{METHOD}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>실험과 결과</h2>
+      <div class="sum-body">{{RESULTS}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>결론</h2>
+      <div class="sum-body">{{CONCLUSION}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>한계와 향후 과제</h2>
+      <div class="sum-body">{{LIMITATIONS}}</div>
+    </section>
+    <section class="sum-block">
+      <h2>핵심 용어</h2>
+      <div class="sum-body">{{TERMS}}</div>
+    </section>
   </div>
-  <p style="margin-top:28px;text-align:center;">
-    <a href="번역본.html" style="font-weight:700;">📄 전체 번역본 보기 →</a>
-  </p>
+  <p style="margin-top:40px;"><a href="번역본.html">전체 번역본 보기 →</a></p>
 </div>
-<footer>핵심 요약 · 더 자세한 내용은 전체 번역본을 참고하세요 · paper-summary 스킬로 자동 생성</footer>
+<footer>핵심만 추린 요약입니다 · 자세한 내용은 전체 번역본을 참고하세요 · paper-summary 스킬로 생성</footer>
 <script>
-/* 다크 모드 전환 버튼 — 시스템 설정 → 버튼으로 덮어쓰기, 선택은 브라우저에 기억된다 */
+/* 테마 버튼 — 아이콘 전환은 CSS 가 하고, 여기서는 상태와 설명만 바꾼다 */
 (function(){
-  var root = document.documentElement;
-  var btn  = document.getElementById('theme-toggle');
+  var root = document.documentElement, btn = document.getElementById('theme-toggle');
   if(!btn) return;
   var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme:dark)') : null;
   function current(){
     var t = root.getAttribute('data-theme');
-    if(t === 'dark' || t === 'light') return t;
-    return (mq && mq.matches) ? 'dark' : 'light';
+    return (t === 'dark' || t === 'light') ? t : ((mq && mq.matches) ? 'dark' : 'light');
   }
-  function paint(){
-    var dark = current() === 'dark';
-    btn.textContent = dark ? '☀️' : '🌙';
-    btn.setAttribute('aria-label', dark ? '라이트 모드로 전환' : '다크 모드로 전환');
-    btn.title = btn.getAttribute('aria-label');
+  function label(){
+    var s = current() === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환';
+    btn.setAttribute('aria-label', s); btn.title = s;
   }
   btn.addEventListener('click', function(){
     var next = current() === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try{ localStorage.setItem('ps-theme', next); }catch(e){}
-    paint();
+    label();
   });
-  if(mq && mq.addEventListener) mq.addEventListener('change', paint);
-  paint();
+  if(mq && mq.addEventListener) mq.addEventListener('change', label);
+  label();
 })();
 </script>
 </body>
