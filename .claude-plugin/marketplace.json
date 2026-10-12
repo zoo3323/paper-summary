@@ -7,6 +7,11 @@
       "name": "paper-summary",
       "source": "./plugins/paper-summary",
       "description": "PDF 논문 → 한국어 번역본 + 요약본 + 용어사전 HTML 생성 (스킬 2종)"
+    },
+    {
+      "name": "usage-statusline",
+      "source": { "source": "github", "repo": "zoo3323/claude-statusline" },
+      "description": "Claude Code 상태줄 — Claude·Codex 사용량 게이지, 컨텍스트, 진행 중인 태스크. /usage-statusline:setup 으로 켜고 표시 항목을 고름 (스킬 3종)"
     }
   ]
 }
