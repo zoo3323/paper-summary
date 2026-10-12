@@ -10,7 +10,7 @@
     },
     {
       "name": "usage-statusline",
-      "source": { "source": "github", "repo": "zoo3323/usage-statusline" },
+      "source": { "source": "url", "url": "https://github.com/zoo3323/usage-statusline.git" },
       "description": "Claude Code 상태줄 — Claude·Codex 사용량 게이지, 컨텍스트, 진행 중인 태스크. /usage-statusline:setup 으로 켜고 표시 항목을 고름 (스킬 3종)"
     }
   ]
